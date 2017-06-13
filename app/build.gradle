@@ -10,6 +10,10 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // add secret values to gradle.properties
+        buildConfigField "String", "TWITTER_CONSUMER_KEY", "${twitterConsumerKey}"
+        buildConfigField "String", "TWITTER_CONSUMER_SECRET", "${twitterConsumerSecret}"
     }
     buildTypes {
         release {
