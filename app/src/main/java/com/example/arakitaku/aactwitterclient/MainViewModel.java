@@ -5,6 +5,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * (c)FURYU CORP. 2017. All rights reserved.
  */
@@ -14,15 +17,18 @@ public class MainViewModel extends ViewModel {
     public MainViewModel() {
     }
 
-    public LiveData<String> getTimeline() {
-        LiveData<String> liveData = new LiveData<String>() {
+    public LiveData<List<String>> getTimeline() {
+        LiveData<List<String>> liveData = new LiveData<List<String>>() {
             @Override
-            public void observe(LifecycleOwner owner, Observer<String> observer) {
+            public void observe(LifecycleOwner owner, Observer<List<String>> observer) {
                 super.observe(owner, observer);
-                observer.onChanged("hoge");
+                List<String> list = new ArrayList<>();
+                for (int i = 0; i < 40; i++) {
+                    list.add(i + " LiveData");
+                }
+                observer.onChanged(list);
             }
         };
         return liveData;
     }
-
 }
