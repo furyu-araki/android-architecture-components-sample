@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.arakitaku.aactwitterclient.livedatasample.Status;
+
 import java.util.List;
 
 /**
@@ -39,11 +41,10 @@ public class MainFragment extends LifecycleFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         final MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mainViewModel.getTimeline().observe(this, new Observer<List<String>>() {
-            @Override
-            public void onChanged(@Nullable List<String> tweetList) {
-                Log.d("TAG", "タイムライン ＝ " + tweetList);
-                recyclerView.setAdapter(new TimelineAdapter(tweetList));
+        mainViewModel.getTimeline().observe(this, resource -> {
+            Log.d("TAG", "タイムライン ＝ " + resource);
+            if (resource.status == Status.SUCCESS) {
+                recyclerView.setAdapter(new TimelineAdapter(resource.data));
             }
         });
     }

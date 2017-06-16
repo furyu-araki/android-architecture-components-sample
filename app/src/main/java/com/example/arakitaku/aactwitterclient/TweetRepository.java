@@ -1,6 +1,8 @@
 package com.example.arakitaku.aactwitterclient;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -9,6 +11,7 @@ import com.example.arakitaku.aactwitterclient.livedatasample.AppExecutors;
 import com.example.arakitaku.aactwitterclient.livedatasample.NetworkBoundResource;
 import com.example.arakitaku.aactwitterclient.livedatasample.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +37,17 @@ public class TweetRepository {
             @NonNull
             @Override
             protected LiveData<List<String>> loadFromDb() {
-                return null;
+                LiveData<List<String>> liveData = new LiveData<List<String>>() {
+                    @Override
+                    protected void onActive() {
+                        List<String> list = new ArrayList<>();
+                        for (int i = 0; i < 40; i++) {
+                            list.add(i + " LiveData");
+                        }
+                        setValue(list);
+                    }
+                };
+                return liveData;
             }
 
             @NonNull

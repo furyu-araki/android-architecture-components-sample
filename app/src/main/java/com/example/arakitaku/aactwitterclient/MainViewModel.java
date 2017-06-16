@@ -1,11 +1,10 @@
 package com.example.arakitaku.aactwitterclient;
 
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 
-import java.util.ArrayList;
+import com.example.arakitaku.aactwitterclient.livedatasample.Resource;
+
 import java.util.List;
 
 /**
@@ -17,18 +16,8 @@ public class MainViewModel extends ViewModel {
     public MainViewModel() {
     }
 
-    public LiveData<List<String>> getTimeline() {
-        LiveData<List<String>> liveData = new LiveData<List<String>>() {
-            @Override
-            public void observe(LifecycleOwner owner, Observer<List<String>> observer) {
-                super.observe(owner, observer);
-                List<String> list = new ArrayList<>();
-                for (int i = 0; i < 40; i++) {
-                    list.add(i + " LiveData");
-                }
-                observer.onChanged(list);
-            }
-        };
-        return liveData;
+    public LiveData<Resource<List<String>>> getTimeline() {
+        TweetRepository tweetRepository = new TweetRepository();
+        return tweetRepository.getTimeline();
     }
 }
