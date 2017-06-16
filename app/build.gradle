@@ -43,4 +43,5 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha2"
 
     implementation 'com.twitter.sdk.android:twitter:3.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 }

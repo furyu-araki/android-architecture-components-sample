@@ -1,10 +1,6 @@
 package com.example.arakitaku.aactwitterclient;
 
-import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleFragment;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.arakitaku.aactwitterclient.livedatasample.Status;
-
-import java.util.List;
 
 /**
  * (c)FURYU CORP. 2017. All rights reserved.

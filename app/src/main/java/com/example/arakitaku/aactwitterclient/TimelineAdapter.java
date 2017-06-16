@@ -6,18 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
-
 /**
  * (c)FURYU CORP. 2017. All rights reserved.
  */
 
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TweetViewHolder> {
 
-    List<String> tweetList;
+    Repository repository;
 
-    public TimelineAdapter(List<String> tweetList) {
-        this.tweetList = tweetList;
+    public TimelineAdapter(Repository repository) {
+        this.repository = repository;
     }
 
     @Override
@@ -27,12 +25,12 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TweetV
 
     @Override
     public void onBindViewHolder(TweetViewHolder tweetViewHolder, int position) {
-        tweetViewHolder.bodyTextView.setText(tweetList.get(position));
+        tweetViewHolder.bodyTextView.setText(repository.getItems().get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return tweetList.size();
+        return repository.getItems().size();
     }
 
     static class TweetViewHolder extends RecyclerView.ViewHolder {
