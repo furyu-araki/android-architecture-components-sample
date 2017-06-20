@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * (c)FURYU CORP. 2017. All rights reserved.
  */
 
-public class TweetRepository {
+public class GithubRepository {
 
 
     public LiveData<Resource<SearchResult>> getTimeline() {

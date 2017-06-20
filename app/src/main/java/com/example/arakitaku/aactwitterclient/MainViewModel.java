@@ -15,7 +15,7 @@ public class MainViewModel extends ViewModel {
     }
 
     public LiveData<Resource<SearchResult>> getTimeline() {
-        TweetRepository tweetRepository = new TweetRepository();
-        return tweetRepository.getTimeline();
+        GithubRepository githubRepository = new GithubRepository();
+        return githubRepository.getTimeline();
     }
 }
