@@ -25,10 +25,10 @@ public class GithubRepository {
 
 
     public LiveData<Resource<List<Repository>>> getTimeline() {
-        return new NetworkBoundResource<List<Repository>, SearchResult>(new AppExecutors()) {
+        return new NetworkBoundResource<List<Repository>, SearchResultDto>(new AppExecutors()) {
 
             @Override
-            protected void saveCallResult(@NonNull SearchResult item) {
+            protected void saveCallResult(@NonNull SearchResultDto item) {
                 Log.d("saveCallResult", "saveCallResult");
             }
 
@@ -58,7 +58,7 @@ public class GithubRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<SearchResult>> createCall() {
+            protected LiveData<ApiResponse<SearchResultDto>> createCall() {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://api.github.com/")
                         .addConverterFactory(GsonConverterFactory.create())

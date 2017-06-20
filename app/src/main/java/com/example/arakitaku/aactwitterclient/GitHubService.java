@@ -13,6 +13,6 @@ import retrofit2.http.Query;
 public interface GitHubService {
 
     @GET("search/repositories")
-    LiveData<ApiResponse<SearchResult>> searchRepositories(@Query("q") String query);
+    LiveData<ApiResponse<SearchResultDto>> searchRepositories(@Query("q") String query);
 
 }

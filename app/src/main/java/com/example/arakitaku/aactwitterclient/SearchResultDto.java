@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * (c)FURYU CORP. 2017. All rights reserved.
  */
-public class SearchResult {
+public class SearchResultDto {
 
     List<Repository> repositories;
 
