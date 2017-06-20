@@ -18,6 +18,6 @@ public class MainViewModel extends ViewModel {
 
     public LiveData<Resource<List<Repository>>> getTimeline() {
         GithubRepository githubRepository = new GithubRepository();
-        return githubRepository.getTimeline();
+        return githubRepository.getTimeline("Android");
     }
 }

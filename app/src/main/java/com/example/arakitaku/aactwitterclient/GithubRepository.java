@@ -24,12 +24,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GithubRepository {
 
 
-    public LiveData<Resource<List<Repository>>> getTimeline() {
+    public LiveData<Resource<List<Repository>>> getTimeline(String query) {
         return new NetworkBoundResource<List<Repository>, SearchResultDto>(new AppExecutors()) {
 
             @Override
-            protected void saveCallResult(@NonNull SearchResultDto item) {
-                Log.d("saveCallResult", "saveCallResult");
+            protected void saveCallResult(@NonNull SearchResultDto searchResultDto) {
+                // searchResultDto.getRepositories(); を保存
+                searchResultDto.getRepositories();
+
+                // searchResultを保存（クエリとリポジトリIDのリスト）
+                new SearchResult(query, searchResultDto.getRepositories());
             }
 
             @Override
@@ -40,6 +44,10 @@ public class GithubRepository {
             @NonNull
             @Override
             protected LiveData<List<Repository>> loadFromDb() {
+                // クエリからSearchResultを取得
+                // Resultがなければ、空のLiveDataを流す → APIが呼ばれる
+                // Resultがあれば、そのIDリストからRepositoryのリストをDBから取得して流す → キャッシュが利用される
+
                 LiveData<List<Repository>> liveData = new LiveData<List<Repository>>() {
                     @Override
                     protected void onActive() {
@@ -65,7 +73,7 @@ public class GithubRepository {
                         .addCallAdapterFactory(new LiveDataCallAdapterFactory())
                         .build();
                 GitHubService service = retrofit.create(GitHubService.class);
-                return service.searchRepositories("Android");
+                return service.searchRepositories(query);
             }
 
         }.asLiveData();
