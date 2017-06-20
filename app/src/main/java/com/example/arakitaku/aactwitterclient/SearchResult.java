@@ -1,13 +1,22 @@
 package com.example.arakitaku.aactwitterclient;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 検索結果
  */
+@Entity
+@TypeConverters(LongListConverter.class)
 public class SearchResult {
+
+    @PrimaryKey
     String query;
+
     List<Long> repositoryIds;
 
     public SearchResult(String query, List<Repository> repositories) {
