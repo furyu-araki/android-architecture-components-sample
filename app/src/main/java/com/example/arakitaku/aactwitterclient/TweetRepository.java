@@ -24,35 +24,35 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TweetRepository {
 
 
-    public LiveData<Resource<Repository>> getTimeline() {
-        return new NetworkBoundResource<Repository, Repository>(new AppExecutors()) {
+    public LiveData<Resource<SearchResult>> getTimeline() {
+        return new NetworkBoundResource<SearchResult, SearchResult>(new AppExecutors()) {
 
             @Override
-            protected void saveCallResult(@NonNull Repository item) {
+            protected void saveCallResult(@NonNull SearchResult item) {
                 Log.d("saveCallResult", "saveCallResult");
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable Repository repository) {
+            protected boolean shouldFetch(@Nullable SearchResult searchResult) {
                 return true;
             }
 
             @NonNull
             @Override
-            protected LiveData<Repository> loadFromDb() {
-                LiveData<Repository> liveData = new LiveData<Repository>() {
+            protected LiveData<SearchResult> loadFromDb() {
+                LiveData<SearchResult> liveData = new LiveData<SearchResult>() {
                     @Override
                     protected void onActive() {
-                        Repository repository = new Repository();
-                        List<Repository.Item> items = new ArrayList<>();
+                        SearchResult searchResult = new SearchResult();
+                        List<Repository> repositories = new ArrayList<>();
                         for (int i = 0; i < 40; i++) {
-                            Repository.Item item = new Repository.Item();
-                            item.setId(i);
-                            item.setName("レポジトリ：" + i);
-                            items.add(item);
+                            Repository repository = new Repository();
+                            repository.setId(i);
+                            repository.setName("レポジトリ：" + i);
+                            repositories.add(repository);
                         }
-                        repository.setItems(items);
-                        setValue(repository);
+                        searchResult.setRepositories(repositories);
+                        setValue(searchResult);
                     }
                 };
                 return liveData;
@@ -60,7 +60,7 @@ public class TweetRepository {
 
             @NonNull
             @Override
-            protected LiveData<ApiResponse<Repository>> createCall() {
+            protected LiveData<ApiResponse<SearchResult>> createCall() {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl("https://api.github.com/")
                         .addConverterFactory(GsonConverterFactory.create())

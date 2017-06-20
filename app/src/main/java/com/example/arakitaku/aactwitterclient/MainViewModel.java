@@ -14,7 +14,7 @@ public class MainViewModel extends ViewModel {
     public MainViewModel() {
     }
 
-    public LiveData<Resource<Repository>> getTimeline() {
+    public LiveData<Resource<SearchResult>> getTimeline() {
         TweetRepository tweetRepository = new TweetRepository();
         return tweetRepository.getTimeline();
     }

@@ -12,10 +12,10 @@ import android.widget.TextView;
 
 public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TweetViewHolder> {
 
-    Repository repository;
+    SearchResult searchResult;
 
-    public TimelineAdapter(Repository repository) {
-        this.repository = repository;
+    public TimelineAdapter(SearchResult searchResult) {
+        this.searchResult = searchResult;
     }
 
     @Override
@@ -25,12 +25,12 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TweetV
 
     @Override
     public void onBindViewHolder(TweetViewHolder tweetViewHolder, int position) {
-        tweetViewHolder.bodyTextView.setText(repository.getItems().get(position).getName());
+        tweetViewHolder.bodyTextView.setText(searchResult.getRepositories().get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return repository.getItems().size();
+        return searchResult.getRepositories().size();
     }
 
     static class TweetViewHolder extends RecyclerView.ViewHolder {
