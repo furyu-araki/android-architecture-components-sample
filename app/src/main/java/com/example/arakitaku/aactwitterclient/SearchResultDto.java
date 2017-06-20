@@ -7,13 +7,9 @@ import java.util.List;
  */
 public class SearchResultDto {
 
-    List<Repository> repositories;
+    List<Repository> items;
 
     public List<Repository> getRepositories() {
-        return repositories;
-    }
-
-    public void setRepositories(List<Repository> repositories) {
-        this.repositories = repositories;
+        return items;
     }
 }
