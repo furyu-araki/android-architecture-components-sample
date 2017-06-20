@@ -24,8 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GithubRepository {
 
 
-    public LiveData<Resource<SearchResult>> getTimeline() {
-        return new NetworkBoundResource<SearchResult, SearchResult>(new AppExecutors()) {
+    public LiveData<Resource<List<Repository>>> getTimeline() {
+        return new NetworkBoundResource<List<Repository>, SearchResult>(new AppExecutors()) {
 
             @Override
             protected void saveCallResult(@NonNull SearchResult item) {
@@ -33,17 +33,16 @@ public class GithubRepository {
             }
 
             @Override
-            protected boolean shouldFetch(@Nullable SearchResult searchResult) {
+            protected boolean shouldFetch(@Nullable List<Repository> searchResult) {
                 return true;
             }
 
             @NonNull
             @Override
-            protected LiveData<SearchResult> loadFromDb() {
-                LiveData<SearchResult> liveData = new LiveData<SearchResult>() {
+            protected LiveData<List<Repository>> loadFromDb() {
+                LiveData<List<Repository>> liveData = new LiveData<List<Repository>>() {
                     @Override
                     protected void onActive() {
-                        SearchResult searchResult = new SearchResult();
                         List<Repository> repositories = new ArrayList<>();
                         for (int i = 0; i < 40; i++) {
                             Repository repository = new Repository();
@@ -51,8 +50,7 @@ public class GithubRepository {
                             repository.setName("レポジトリ：" + i);
                             repositories.add(repository);
                         }
-                        searchResult.setRepositories(repositories);
-                        setValue(searchResult);
+                        setValue(repositories);
                     }
                 };
                 return liveData;
