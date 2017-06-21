@@ -20,7 +20,7 @@ public class MainViewModel extends ViewModel {
     }
 
     public LiveData<Resource<List<Repository>>> getTimeline() {
-        return githubRepository.getTimeline("Android");
+        return githubRepository.getTimeline("View");
     }
 
     public void init(Context context) {
