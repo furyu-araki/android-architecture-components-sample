@@ -1,6 +1,10 @@
 package com.example.arakitaku.aactwitterclient;
 
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.Transformations;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,45 +27,43 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GithubRepository {
 
+    RepositoryDao repositoryDao;
+
+    public GithubRepository(Context context) {
+        MainApplication application = (MainApplication) context.getApplicationContext();
+        AppDatabase database = application.getDatabase();
+        repositoryDao = database.repositoryDao();
+    }
 
     public LiveData<Resource<List<Repository>>> getTimeline(String query) {
         return new NetworkBoundResource<List<Repository>, SearchResultDto>(new AppExecutors()) {
 
             @Override
             protected void saveCallResult(@NonNull SearchResultDto searchResultDto) {
-                // searchResultDto.getRepositories(); を保存
-                searchResultDto.getRepositories();
-
-                // searchResultを保存（クエリとリポジトリIDのリスト）
-                new SearchResult(query, searchResultDto.getRepositories());
+                repositoryDao.insert(searchResultDto.getRepositories());
+                repositoryDao.insert(new SearchResult(query, searchResultDto.getRepositories()));
             }
 
             @Override
             protected boolean shouldFetch(@Nullable List<Repository> searchResult) {
-                return true;
+                return searchResult == null;
             }
 
             @NonNull
             @Override
             protected LiveData<List<Repository>> loadFromDb() {
                 // クエリからSearchResultを取得
-                // Resultがなければ、空のLiveDataを流す → APIが呼ばれる
-                // Resultがあれば、そのIDリストからRepositoryのリストをDBから取得して流す → キャッシュが利用される
+                repositoryDao.search(query);
 
-                LiveData<List<Repository>> liveData = new LiveData<List<Repository>>() {
-                    @Override
-                    protected void onActive() {
-                        List<Repository> repositories = new ArrayList<>();
-                        for (int i = 0; i < 40; i++) {
-                            Repository repository = new Repository();
-                            repository.setId(i);
-                            repository.setName("レポジトリ：" + i);
-                            repositories.add(repository);
-                        }
-                        setValue(repositories);
+                return Transformations.switchMap(repositoryDao.search(query), searchResult -> {
+                    if (searchResult == null) {
+                        // Resultがなければ、空のLiveDataを流す → APIが呼ばれる
+                        return new AbsentLiveData();
+                    } else {
+                        // Resultがあれば、そのIDリストからRepositoryのリストをDBから取得して流す → キャッシュが利用される
+                        return repositoryDao.getByIds(searchResult.getRepositoryIds());
                     }
-                };
-                return liveData;
+                });
             }
 
             @NonNull

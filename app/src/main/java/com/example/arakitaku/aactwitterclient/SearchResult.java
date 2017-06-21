@@ -11,13 +11,16 @@ import java.util.List;
  * 検索結果
  */
 @Entity
-@TypeConverters(LongListConverter.class)
+@TypeConverters(IntegerListConverter.class)
 public class SearchResult {
 
     @PrimaryKey
     String query;
 
-    List<Long> repositoryIds;
+    List<Integer> repositoryIds;
+
+    public SearchResult() {
+    }
 
     public SearchResult(String query, List<Repository> repositories) {
         this.query = query;
@@ -35,11 +38,11 @@ public class SearchResult {
         this.query = query;
     }
 
-    public List<Long> getRepositoryIds() {
+    public List<Integer> getRepositoryIds() {
         return repositoryIds;
     }
 
-    public void setRepositoryIds(List<Long> repositoryIds) {
+    public void setRepositoryIds(List<Integer> repositoryIds) {
         this.repositoryIds = repositoryIds;
     }
 }

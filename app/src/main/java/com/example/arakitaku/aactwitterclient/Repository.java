@@ -10,15 +10,18 @@ import android.arch.persistence.room.PrimaryKey;
 public class Repository {
 
     @PrimaryKey
-    long id;
+    int id;
 
     String name;
 
-    public long getId() {
+    public Repository() {
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

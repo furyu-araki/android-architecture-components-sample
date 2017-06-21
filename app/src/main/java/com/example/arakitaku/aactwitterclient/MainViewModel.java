@@ -2,6 +2,7 @@ package com.example.arakitaku.aactwitterclient;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
 
 import com.example.arakitaku.aactwitterclient.livedatasample.Resource;
 
@@ -13,11 +14,17 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel {
 
+    private GithubRepository githubRepository;
+
     public MainViewModel() {
     }
 
     public LiveData<Resource<List<Repository>>> getTimeline() {
-        GithubRepository githubRepository = new GithubRepository();
         return githubRepository.getTimeline("Android");
     }
+
+    public void init(Context context) {
+        githubRepository = new GithubRepository(context);
+    }
+
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public interface RepositoryDao {
 
     @Query("SELECT * FROM Repository WHERE id in (:repositoryIds)")
-    LiveData<List<Repository>> getByIds(List<Long> repositoryIds);
+    LiveData<List<Repository>> getByIds(List<Integer> repositoryIds);
 
     @Query("SELECT * FROM SearchResult WHERE query = :query")
     LiveData<SearchResult> search(String query);

@@ -10,7 +10,7 @@ import java.util.List;
  * (c)FURYU CORP. 2017. All rights reserved.
  */
 
-public class LongListConverter {
+public class IntegerListConverter {
 
     @TypeConverter
     public static List<Integer> stringToIntList(String data) {
