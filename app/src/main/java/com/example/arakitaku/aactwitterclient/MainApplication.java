@@ -6,6 +6,7 @@ package com.example.arakitaku.aactwitterclient;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 
+import com.facebook.stetho.Stetho;
 import com.twitter.sdk.android.core.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterConfig;
@@ -23,6 +24,8 @@ public class MainApplication extends Application {
                 .debug(BuildConfig.DEBUG)
                 .build();
         Twitter.initialize(config);
+
+        Stetho.initializeWithDefaults(this);
     }
 
     public AppDatabase getDatabase() {
