@@ -45,7 +45,7 @@ public class TimelineAdapter extends RecyclerView.Adapter<TimelineAdapter.TweetV
         }
 
         static TweetViewHolder create(ViewGroup root) {
-            View view = LayoutInflater.from(root.getContext()).inflate(R.layout.cell_tweet, root, false);
+            View view = LayoutInflater.from(root.getContext()).inflate(R.layout.cell_repository, root, false);
             return new TweetViewHolder(view);
         }
 
