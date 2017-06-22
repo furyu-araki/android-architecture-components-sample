@@ -35,7 +35,6 @@ public class MainFragment extends LifecycleFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         final MainViewModel mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mainViewModel.init(getActivity());
         mainViewModel.getTimeline().observe(this, resource -> {
             Log.d("TAG", "タイムライン ＝ " + resource);
             if (resource.status == Status.SUCCESS) {
